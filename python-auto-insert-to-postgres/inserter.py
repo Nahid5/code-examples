@@ -20,7 +20,7 @@ try:
     
     # Get output of the command
     rows = cursor.fetchall()
-
+    print(rows)
 
     cursor.close()
     conn.close()
