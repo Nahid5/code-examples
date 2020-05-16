@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import psycopg2
-from psycopg2.extras import Json, Dictonary
+from psycopg2.extras import Json, DictCursor
 
 conn = None
 try:
@@ -10,7 +10,7 @@ try:
     conn = psycopg2.connect(connection_str)
 
     # Create cursor that can execute queries
-    cursor = conn.cursor(cursor_factor=DictCursor)
+    cursor = conn.cursor(cursor_factory=DictCursor)
     
     # Example query
     cursor.execute("SELECT datname FROM pg_database;")
@@ -21,11 +21,10 @@ try:
     # Get output of the command
     rows = cursor.fetchall()
 
-except (Exception, psycopg2.Error) as error :
+
+    cursor.close()
+    conn.close()
+    print("PostgreSQL connection is closed")
+
+except Exception as error :
     print ("Error while connecting to PostgreSQL", error)
-finally:
-    #closing database connection.
-        if(connection):
-            cursor.close()
-            connection.close()
-            print("PostgreSQL connection is closed")
