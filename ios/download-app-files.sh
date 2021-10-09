@@ -1,10 +1,6 @@
 #!/bin/bash
 # Downloads the application data from /private/var/containers/Bundle/Application/
 # Downloads the ipa /var/mobile/Containers/Data/Application/
-red=$'\e[1;31m'
-grn=$'\e[1;32m'
-ylw=$'\e[1;33m'
-end=$'\e[0m'
 
 if [ ${#@} == 0 ]; then
     echo -e "Download Important Files:\n-h: Host\n-u: SSH User\n-d: Download Location"
@@ -40,5 +36,6 @@ length=${#out_array[@]}
 START=0
 for (( c=$START; c<$length; c++ ))
 do
+  echo "Downloading from: ${out_array[$c]}" 
   scp -r "$user"@"$host":"${out_array[$c]}" "$downloadloc"
 done
